@@ -1,20 +1,35 @@
 "use client";
 
+import React, { useRef, useState } from "react";
 import Camera from "./components/camera";
 import Canvas from "./components/canvas";
-import { useState } from "react";
 
 export default function Home() {
-  const [drawData, setDrawData] = useState<any>(null);
+  const handDataRef = useRef<any>(null);
+  const [color, setColor] = useState("red");
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <h2>✋ Air Drawing System</h2>
+    <div>
+      <h2>🎨 Air Draw System</h2>
 
-      <div style={{ position: "relative" }}>
-        <Camera onHandData={setDrawData} />
-        <Canvas drawData={drawData} />
+      {/* 🎨 Color Picker */}
+      <div style={{ marginBottom: "10px" }}>
+        <button onClick={() => setColor("red")}>🔴</button>
+        <button onClick={() => setColor("blue")}>🔵</button>
+        <button onClick={() => setColor("green")}>🟢</button>
+        <button onClick={() => setColor("black")}>⚫</button>
       </div>
+
+      <Camera
+        onHandData={(data: any) => {
+          handDataRef.current = data;
+        }}
+      />
+
+      <Canvas
+        getHandData={() => handDataRef.current}
+        color={color}
+      />
     </div>
   );
 }

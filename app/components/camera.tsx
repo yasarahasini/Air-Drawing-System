@@ -18,16 +18,9 @@ export default function CameraFeed({ onHandData }: any) {
     };
 
     const init = async () => {
-      // ✅ Load MediaPipe scripts from CDN
       await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js");
-      await loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js");
 
       const HandsClass = (window as any).Hands;
-
-      if (!HandsClass) {
-        console.error("Hands not loaded");
-        return;
-      }
 
       hands = new HandsClass({
         locateFile: (file: string) =>
@@ -35,7 +28,7 @@ export default function CameraFeed({ onHandData }: any) {
       });
 
       hands.setOptions({
-        maxNumHands: 2,
+        maxNumHands: 1,
         modelComplexity: 1,
         minDetectionConfidence: 0.7,
         minTrackingConfidence: 0.7,
@@ -48,7 +41,6 @@ export default function CameraFeed({ onHandData }: any) {
       const video = videoRef.current;
       if (!video) return;
 
-      // ✅ Start webcam
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
@@ -56,7 +48,6 @@ export default function CameraFeed({ onHandData }: any) {
       video.srcObject = stream;
       await video.play();
 
-      // 🔁 detection loop
       const detect = async () => {
         if (!video || !hands) return;
 

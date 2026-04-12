@@ -61,7 +61,7 @@ export default function Canvas({ getHandData, color }: any) {
           if (isIndexUp && isMiddleUp) {
             ctx.strokeStyle = "white";
           }
-          // ☝️ DRAW
+         
           else if (isIndexUp) {
             ctx.strokeStyle = color;
           } else {

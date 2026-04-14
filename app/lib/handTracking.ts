@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Camera from "@/components/Camera";
+import Camera from "../components/camera";
 
 const HandTracking = () => {
   const [handData, setHandData] = useState<any>(null);
